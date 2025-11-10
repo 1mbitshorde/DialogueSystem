@@ -9,6 +9,7 @@
     "Options"
   ],
   "dependencies": {
+    "com.actioncode.serialized-dictionary": "1.2.0",
     "com.unity.localization": "1.5.8",
     "com.unity.ugui": "2.0.0"
   },
