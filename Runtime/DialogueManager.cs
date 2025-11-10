@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using OneM.GameplaySystem;
 
 namespace OneM.DialogueSystem
 {
@@ -27,8 +28,12 @@ namespace OneM.DialogueSystem
 
         public static async Awaitable PlayAsync(Dialogue dialogue)
         {
+            GameplayManager.CurrentState = State.Dialogue;
             OnDialogueStarted?.Invoke();
+
             await Instance.board.PlayAsync(dialogue);
+
+            GameplayManager.CurrentState = State.Gameplay;
             OnDialogueStopped?.Invoke();
         }
 
