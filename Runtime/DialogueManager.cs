@@ -9,18 +9,28 @@ namespace OneM.DialogueSystem
 
         public static DialogueManager Instance { get; private set; }
 
+        public static bool IsPlaying { get; private set; }
+
         private void Awake()
         {
             Instance = this;
             board.Disable();
         }
 
-        private void OnDestroy() => Instance = null;
+        private void OnDestroy() => Dispose();
 
-        public async Awaitable PlayAsync(Dialogue dialogue)
+        public static bool CanPlay() => Instance != null && !IsPlaying;
+
+        public static async Awaitable PlayAsync(Dialogue dialogue)
         {
-            await board.EnableAsync();
+            await Instance.board.EnableAsync();
 
+        }
+
+        private static void Dispose()
+        {
+            Instance = null;
+            IsPlaying = false;
         }
     }
 }
