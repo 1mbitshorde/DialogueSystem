@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace OneM.DialogueSystem
@@ -11,6 +12,9 @@ namespace OneM.DialogueSystem
 
         public static bool IsPlaying { get; private set; }
 
+        public static event Action OnDialogueStarted;
+        public static event Action OnDialogueStopped;
+
         private void Awake()
         {
             Instance = this;
@@ -23,8 +27,9 @@ namespace OneM.DialogueSystem
 
         public static async Awaitable PlayAsync(Dialogue dialogue)
         {
-            await Instance.board.EnableAsync();
-
+            OnDialogueStarted?.Invoke();
+            await Instance.board.PlayAsync(dialogue);
+            OnDialogueStopped?.Invoke();
         }
 
         private static void Dispose()
