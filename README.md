@@ -1,6 +1,6 @@
-# [PackageName]
+# Dialogue System
 
-[...]
+Localized Dialogue System for Player and Npcs
 
 ## How To Use
 
