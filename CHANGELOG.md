@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - ActorPosition
 - Dialogue SO
 - Actor SO
+- PrimeTween package dependency
 - Serialized Dictionary package dependency
 - Unity Localization package dependency
 - TextMeshPro package dependency
