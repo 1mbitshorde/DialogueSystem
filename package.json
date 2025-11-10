@@ -9,6 +9,7 @@
     "Options"
   ],
   "dependencies": {
+    "com.unity.localization": "1.5.8",
     "com.unity.ugui": "2.0.0"
   },
   "homepage": "https://github.com/1mbitshorde/DialogueSystem#readme",
