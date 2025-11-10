@@ -13,5 +13,7 @@ namespace OneM.DialogueSystem
         public Actor Actor { get; private set; }
         [field: SerializeField, Tooltip("The localized line used on this dialogue.")]
         public LocalizedString LocalizedLine { get; private set; }
+        [field: SerializeField, Tooltip("The position where the Actor will be in the UI.")]
+        public ActorPosition Position { get; private set; }
     }
 }
