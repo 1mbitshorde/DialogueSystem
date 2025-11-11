@@ -20,9 +20,11 @@ namespace OneM.DialogueSystem
             gameObject.SetActive(true);
             await Awaitable.WaitForSecondsAsync(initialAnimationTime);
 
-            foreach (var line in dialogue.LocalizedLine)
+            foreach (var line in dialogue.Lines)
             {
-                this.line.StringReference = line;
+                EnableActorName(line.Position);
+                this.line.StringReference = line.LocalizedLine;
+
                 await Awaitable.WaitForSecondsAsync(2f);
             }
 
@@ -32,17 +34,29 @@ namespace OneM.DialogueSystem
         public void Disable()
         {
             gameObject.SetActive(false);
+            line.StringReference = null;
             DisposeActors();
         }
 
-        private void LoadActors(DialogueActorLine[] actorLines)
+        private void LoadActors(DialogueActor[] dialogueActors)
         {
-            foreach (var line in actorLines)
+            foreach (var dialogue in dialogueActors)
             {
-                var actor = actors[line.Position];
-                actor.SetPortrait(line.Actor.Portrait);
-                actor.SetName(line.Actor.LocalizedName);
+                var actor = actors[dialogue.Position];
+
+                actor.SetPortrait(dialogue.Actor.Portrait);
+                actor.SetName(dialogue.Actor.LocalizedName);
+                actor.SetNameActive(false);
             }
+        }
+
+        private void EnableActorName(ActorPosition position)
+        {
+            foreach (var actor in actors.Values)
+            {
+                actor.SetNameActive(false);
+            }
+            actors[position].SetNameActive(true);
         }
 
         private void DisposeActors()

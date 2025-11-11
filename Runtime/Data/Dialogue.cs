@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Localization;
 
 namespace OneM.DialogueSystem
 {
@@ -10,9 +9,9 @@ namespace OneM.DialogueSystem
     public sealed class Dialogue : ScriptableObject
     {
         [field: SerializeField, Tooltip("All Actors present in this dialogue.")]
-        public DialogueActorLine[] Actors { get; private set; }
+        public DialogueActor[] Actors { get; private set; }
 
-        [field: SerializeField, Tooltip("The localized lines used on this dialogue.")]
-        public LocalizedString[] LocalizedLine { get; private set; }
+        [field: SerializeField, Tooltip("The lines used on this dialogue.")]
+        public DialogueLine[] Lines { get; private set; }
     }
 }

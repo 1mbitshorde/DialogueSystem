@@ -6,7 +6,7 @@ namespace OneM.DialogueSystem
     /// Class to hold Actor and Position data for dialogues.
     /// </summary>
     [System.Serializable]
-    public struct DialogueActorLine
+    public struct DialogueActor
     {
         [field: SerializeField, Tooltip("The Actor used on this dialogue line.")]
         public Actor Actor { get; private set; }
