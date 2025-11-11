@@ -15,23 +15,42 @@ namespace OneM.DialogueSystem
 
         public async Awaitable PlayAsync(Dialogue dialogue)
         {
+            LoadActors(dialogue.Actors);
+
             gameObject.SetActive(true);
             await Awaitable.WaitForSecondsAsync(initialAnimationTime);
 
-            foreach (var line in dialogue.Lines)
+            foreach (var line in dialogue.LocalizedLine)
             {
-                /*var actor = actors[line.Position];
-                
-                actor.SetPortrait(line.Actor.Portrait);
-                actor.SetName(line.Actor.LocalizedName);*/
-
-                this.line.StringReference = line.LocalizedLine;
-                await Awaitable.WaitForSecondsAsync(1f);
+                this.line.StringReference = line;
+                await Awaitable.WaitForSecondsAsync(2f);
             }
 
             Disable();
         }
 
-        public void Disable() => gameObject.SetActive(false);
+        public void Disable()
+        {
+            gameObject.SetActive(false);
+            DisposeActors();
+        }
+
+        private void LoadActors(DialogueActorLine[] actorLines)
+        {
+            foreach (var line in actorLines)
+            {
+                var actor = actors[line.Position];
+                actor.SetPortrait(line.Actor.Portrait);
+                actor.SetName(line.Actor.LocalizedName);
+            }
+        }
+
+        private void DisposeActors()
+        {
+            foreach (var actor in actors.Values)
+            {
+                actor.Dispose();
+            }
+        }
     }
 }

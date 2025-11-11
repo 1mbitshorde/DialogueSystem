@@ -13,5 +13,11 @@ namespace OneM.DialogueSystem
 
         public void SetPortrait(Sprite image) => portrait.sprite = image;
         public void SetName(LocalizedString name) => localizedName.StringReference = name;
+
+        public void Dispose()
+        {
+            SetName(null);
+            SetPortrait(null);
+        }
     }
 }

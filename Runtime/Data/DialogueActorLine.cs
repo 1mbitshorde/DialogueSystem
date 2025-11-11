@@ -1,18 +1,15 @@
 using UnityEngine;
-using UnityEngine.Localization;
 
 namespace OneM.DialogueSystem
 {
     /// <summary>
-    /// Class to hold a single Dialogue Line.
+    /// Class to hold Actor and Position data for dialogues.
     /// </summary>
     [System.Serializable]
-    public struct DialogueLine
+    public struct DialogueActorLine
     {
         [field: SerializeField, Tooltip("The Actor used on this dialogue line.")]
         public Actor Actor { get; private set; }
-        [field: SerializeField, Tooltip("The localized line used on this dialogue.")]
-        public LocalizedString LocalizedLine { get; private set; }
         [field: SerializeField, Tooltip("The position where the Actor will be in the UI.")]
         public ActorPosition Position { get; private set; }
     }
