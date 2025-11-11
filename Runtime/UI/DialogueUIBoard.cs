@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
 using ActionCode.SerializedDictionaries;
@@ -7,8 +8,12 @@ namespace OneM.DialogueSystem
     [DisallowMultipleComponent]
     public sealed class DialogueUIBoard : MonoBehaviour
     {
-        [SerializeField] private LocalizeStringEvent line;
+        [SerializeField] private TMP_Text textLine;
+        [SerializeField] private LocalizeStringEvent localizedLine;
+
+        [Header("TIMERS")]
         [SerializeField] private float initialAnimationTime = 1f;
+        [SerializeField] private float typeWriteTime = 0.02f;
 
         [Space]
         [SerializeField] private SerializedDictionary<ActorPosition, DialogueUIActor> actors;
@@ -23,8 +28,9 @@ namespace OneM.DialogueSystem
             foreach (var line in dialogue.Lines)
             {
                 EnableActorName(line.Position);
-                this.line.StringReference = line.LocalizedLine;
+                localizedLine.StringReference = line.LocalizedLine;
 
+                await TypeWriteAsync();
                 await Awaitable.WaitForSecondsAsync(2f);
             }
 
@@ -34,8 +40,20 @@ namespace OneM.DialogueSystem
         public void Disable()
         {
             gameObject.SetActive(false);
-            line.StringReference = null;
+            localizedLine.StringReference = null;
             DisposeActors();
+        }
+
+        private async Awaitable TypeWriteAsync()
+        {
+            var textLength = textLine.text.Length;
+            textLine.maxVisibleCharacters = 0;
+
+            while (textLine.maxVisibleCharacters < textLength)
+            {
+                textLine.maxVisibleCharacters++;
+                await Awaitable.WaitForSecondsAsync(typeWriteTime);
+            }
         }
 
         private void LoadActors(DialogueActor[] dialogueActors)

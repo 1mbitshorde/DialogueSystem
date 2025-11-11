@@ -870,7 +870,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d069edbb25c8e664a8bf2d58900f8ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: OneM.DialogueSystem::OneM.DialogueSystem.DialogueBoard
-  line: {fileID: 3858258056473086786}
+  textLine: {fileID: 6208803028554479590}
+  localizedLine: {fileID: 3858258056473086786}
+  initialAnimationTime: 1
+  typeWriteTime: 0.02
   actors:
     list:
     - key: 0
