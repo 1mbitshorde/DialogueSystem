@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - ActorPosition
 - Dialogue SO
 - Actor SO
+- ActionCode Input System package dependency
+- Addressables package dependency
+- Awaitable System package dependency
 - Gameplay System package dependency
 - Interactable System package dependency
 - Serialized Dictionary package dependency
