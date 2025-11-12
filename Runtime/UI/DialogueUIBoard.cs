@@ -9,6 +9,7 @@ namespace OneM.DialogueSystem
     [DisallowMultipleComponent]
     public sealed class DialogueUIBoard : MonoBehaviour
     {
+        [SerializeField] private AudioSource audioSource;
         [SerializeField] private TMP_Text textLine;
         [SerializeField] private LocalizeStringEvent localizedLine;
         [SerializeField] private GameObject completionLineMarker;
@@ -91,6 +92,7 @@ namespace OneM.DialogueSystem
             var textLength = textLine.text.Length;
             textLine.maxVisibleCharacters = 0;
 
+            audioSource.Play();
             IsTypeWriting = true;
             SetCompletionLineMarkerEnable(false);
 
@@ -100,6 +102,7 @@ namespace OneM.DialogueSystem
                 await AwaitableUtility.WaitForSecondsRealtimeAsync(typeWriteTime);
             }
 
+            audioSource.Stop();
             IsTypeWriting = false;
             SetCompletionLineMarkerEnable(true);
         }
