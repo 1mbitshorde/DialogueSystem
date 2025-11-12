@@ -2,6 +2,7 @@
     "name": "OneM.DialogueSystem",
     "rootNamespace": "OneM.DialogueSystem",
     "references": [
+        "GUID:2055e4f86e8d13344b9d599457150310",
         "GUID:b6d604d366204e3498891d6d6ba5936e",
         "GUID:84e1c6d8857ddb248952120b89ed420f",
         "GUID:ad9a3732537d4994abba636b0bd510f7",
