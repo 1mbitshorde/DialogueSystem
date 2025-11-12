@@ -18,6 +18,8 @@ namespace OneM.DialogueSystem
         [Space]
         [SerializeField] private SerializedDictionary<ActorPosition, DialogueUIActor> actors;
 
+        public bool IsTypeWriting { get; private set; }
+
         public async Awaitable PlayAsync(Dialogue dialogue)
         {
             LoadActors(dialogue.Actors);
@@ -30,11 +32,18 @@ namespace OneM.DialogueSystem
                 EnableActorName(line.Position);
                 localizedLine.StringReference = line.LocalizedLine;
 
+                // Waits localized string to load
+                await localizedLine.StringReference.GetLocalizedStringAsync().Task;
                 await TypeWriteAsync();
                 await Awaitable.WaitForSecondsAsync(2f);
             }
 
             Disable();
+        }
+
+        public void Advance()
+        {
+            if (IsTypeWriting) CompleteTypeWrite();
         }
 
         public void Disable()
@@ -49,12 +58,18 @@ namespace OneM.DialogueSystem
             var textLength = textLine.text.Length;
             textLine.maxVisibleCharacters = 0;
 
+            IsTypeWriting = true;
+
             while (textLine.maxVisibleCharacters < textLength)
             {
                 textLine.maxVisibleCharacters++;
                 await Awaitable.WaitForSecondsAsync(typeWriteTime);
             }
+
+            IsTypeWriting = false;
         }
+
+        private void CompleteTypeWrite() => textLine.maxVisibleCharacters = textLine.text.Length;
 
         private void LoadActors(DialogueActor[] dialogueActors)
         {
