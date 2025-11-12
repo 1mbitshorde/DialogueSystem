@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [0.1.0] - 2025-01-01
+## [0.1.0] - 2025-11-12
 ### Added
 - Play sound when dialogue is writing
 - Show dialogue using type write animation
