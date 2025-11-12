@@ -25,6 +25,8 @@ namespace OneM.DialogueSystem
             IsInteracting = true;
             await DialogueManager.PlayAsync(CurrentDialogue);
             IsInteracting = false;
+
+            ChangeAvailability(true);
         }
 
         public void ChangeAvailability(bool isAvailable)

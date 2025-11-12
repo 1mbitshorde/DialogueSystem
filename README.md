@@ -1,10 +1,24 @@
 # Dialogue System
 
-Localized Dialogue System for Player and Npcs
+Localized Dialogue System for Player and Npcs.
+
+Each dialogue is played between one or multiple Actors. The Actor name and dialogue lines should be localized.
 
 ## How To Use
 
-### Using [...]
+### Creating Dialogue Assets
+
+Create an Actor Scriptable Object (SO) asset by the creation menu, **OneM > Dialogue System > New Actor** and set its fields.
+
+Create a Dialogue SO asset by the creation menu, **OneM > Dialogue System > New Dialogue** and set the its fields, including the Actors for this dialogue.
+
+### Playing the Dialogues
+
+Add the prefab [P_DialogueManager](/Prefabs/P_DialogueManager.prefab) into your Scene and call `DialogueManager.PlayAsync()` function from any other script, passing the Dialogue SO you have created.
+
+You can create your own P_DialogueManager prefab. Check the one provided in this package to know how.
+
+Finally, you can attach the component [InteractableDialogue](/Runtime/InteractableDialogue.cs) into any GameObject and starts a dialogue when the Player (or any other interactor) interacats with it.
 
 ## Installation
 
