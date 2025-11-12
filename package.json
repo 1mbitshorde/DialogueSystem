@@ -12,6 +12,7 @@
     "com.1mbitshorde.gameplay-system": "0.3.0",
     "com.1mbitshorde.interactable-system": "1.0.0",
     "com.actioncode.serialized-dictionary": "1.2.0",
+    "com.unity.addressables": "2.7.4",
     "com.unity.localization": "1.5.8",
     "com.unity.ugui": "2.0.0"
   },
