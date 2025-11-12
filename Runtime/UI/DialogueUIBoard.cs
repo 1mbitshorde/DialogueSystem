@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
+using ActionCode.AwaitableSystem;
 using ActionCode.SerializedDictionaries;
 
 namespace OneM.DialogueSystem
@@ -10,46 +11,63 @@ namespace OneM.DialogueSystem
     {
         [SerializeField] private TMP_Text textLine;
         [SerializeField] private LocalizeStringEvent localizedLine;
+        [SerializeField] private GameObject completionLineMarker;
 
         [Header("TIMERS")]
-        [SerializeField] private float initialAnimationTime = 1f;
-        [SerializeField] private float typeWriteTime = 0.02f;
+        [SerializeField, Tooltip("The initial time to wait (in seconds) before start to writing.")]
+        private float initialWaitingTime = 1f;
+        [SerializeField, Tooltip("The time (in seconds) to wait between each letter.")]
+        private float typeWriteTime = 0.02f;
 
         [Space]
-        [SerializeField] private SerializedDictionary<ActorPosition, DialogueUIActor> actors;
+        [SerializeField, Tooltip("The actors instances.")]
+        private SerializedDictionary<ActorPosition, DialogueUIActor> actors;
 
         public bool IsTypeWriting { get; private set; }
+        public bool IsNextLineAvailable { get; private set; }
 
         public async Awaitable PlayAsync(Dialogue dialogue)
         {
+            SetCompletionLineMarkerEnable(false);
             LoadActors(dialogue.Actors);
 
             gameObject.SetActive(true);
-            await Awaitable.WaitForSecondsAsync(initialAnimationTime);
+            await AwaitableUtility.WaitForSecondsRealtimeAsync(initialWaitingTime);
 
             foreach (var line in dialogue.Lines)
             {
-                EnableActorName(line.Position);
+                IsNextLineAvailable = false;
+                SetActorNameEnable(line.Position);
                 localizedLine.StringReference = line.LocalizedLine;
 
-                // Waits localized string to load
+                // Waits the localized string to fully load.
                 await localizedLine.StringReference.GetLocalizedStringAsync().Task;
                 await TypeWriteAsync();
-                await Awaitable.WaitForSecondsAsync(2f);
+                await AwaitableUtility.WaitUntilAsync(() => IsNextLineAvailable);
             }
 
             Disable();
         }
 
+        /// <summary>
+        /// Completes the current line or advance to the next one.
+        /// </summary>
         public void Advance()
         {
             if (IsTypeWriting) CompleteTypeWrite();
+            else AdvanceToNextLine();
         }
+
+        public void AdvanceToNextLine() => IsNextLineAvailable = true;
 
         public void Disable()
         {
             gameObject.SetActive(false);
+            SetCompletionLineMarkerEnable(false);
+
+            textLine.text = string.Empty;
             localizedLine.StringReference = null;
+
             DisposeActors();
         }
 
@@ -59,6 +77,7 @@ namespace OneM.DialogueSystem
             textLine.maxVisibleCharacters = 0;
 
             IsTypeWriting = true;
+            SetCompletionLineMarkerEnable(false);
 
             while (textLine.maxVisibleCharacters < textLength)
             {
@@ -67,6 +86,7 @@ namespace OneM.DialogueSystem
             }
 
             IsTypeWriting = false;
+            SetCompletionLineMarkerEnable(true);
         }
 
         private void CompleteTypeWrite() => textLine.maxVisibleCharacters = textLine.text.Length;
@@ -76,14 +96,11 @@ namespace OneM.DialogueSystem
             foreach (var dialogue in dialogueActors)
             {
                 var actor = actors[dialogue.Position];
-
-                actor.SetPortrait(dialogue.Actor.Portrait);
-                actor.SetName(dialogue.Actor.LocalizedName);
-                actor.SetNameActive(false);
+                actor.Load(dialogue.Actor);
             }
         }
 
-        private void EnableActorName(ActorPosition position)
+        private void SetActorNameEnable(ActorPosition position)
         {
             foreach (var actor in actors.Values)
             {
@@ -91,6 +108,9 @@ namespace OneM.DialogueSystem
             }
             actors[position].SetNameActive(true);
         }
+
+        private void SetCompletionLineMarkerEnable(bool isEnable) =>
+            completionLineMarker.SetActive(isEnable);
 
         private void DisposeActors()
         {

@@ -27,7 +27,10 @@ namespace OneM.DialogueSystem
             IsInteracting = false;
         }
 
-        public void ChangeAvailability(bool isAvailable) => interactionInput.SetActive(isAvailable);
+        public void ChangeAvailability(bool isAvailable)
+        {
+            if (interactionInput) interactionInput.SetActive(isAvailable);
+        }
 
         public void ShowInteractionFail()
         {
