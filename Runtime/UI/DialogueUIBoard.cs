@@ -26,6 +26,8 @@ namespace OneM.DialogueSystem
         public bool IsTypeWriting { get; private set; }
         public bool IsNextLineAvailable { get; private set; }
 
+        private int lastAdvanceFrame;
+
         public async Awaitable PlayAsync(Dialogue dialogue)
         {
             SetCompletionLineMarkerEnable(false);
@@ -37,13 +39,13 @@ namespace OneM.DialogueSystem
             foreach (var line in dialogue.Lines)
             {
                 IsNextLineAvailable = false;
+
                 SetActorNameEnable(line.Position);
                 localizedLine.StringReference = line.LocalizedLine;
 
-                // Waits the localized string to fully load.
-                await localizedLine.StringReference.GetLocalizedStringAsync().Task;
-                await TypeWriteAsync();
-                await AwaitableUtility.WaitUntilAsync(() => IsNextLineAvailable);
+                await WaitUntilLocalizedLineIsLoadedAsync();
+                await PlayTypeWriteLineAnimationAsync();
+                await WaitUntilNextLineIsAvailableAsync();
             }
 
             Disable();
@@ -54,8 +56,12 @@ namespace OneM.DialogueSystem
         /// </summary>
         public void Advance()
         {
+            if (!CanAdvance()) return;
+
             if (IsTypeWriting) CompleteTypeWrite();
             else AdvanceToNextLine();
+
+            lastAdvanceFrame = Time.frameCount;
         }
 
         public void AdvanceToNextLine() => IsNextLineAvailable = true;
@@ -71,7 +77,16 @@ namespace OneM.DialogueSystem
             DisposeActors();
         }
 
-        private async Awaitable TypeWriteAsync()
+        private bool CanAdvance()
+        {
+            var framesSinceLastAdvance = Time.frameCount - lastAdvanceFrame;
+            return framesSinceLastAdvance > 10;
+        }
+
+        private async Awaitable WaitUntilLocalizedLineIsLoadedAsync() =>
+            await localizedLine.StringReference.GetLocalizedStringAsync().Task;
+
+        private async Awaitable PlayTypeWriteLineAnimationAsync()
         {
             var textLength = textLine.text.Length;
             textLine.maxVisibleCharacters = 0;
@@ -82,12 +97,15 @@ namespace OneM.DialogueSystem
             while (textLine.maxVisibleCharacters < textLength)
             {
                 textLine.maxVisibleCharacters++;
-                await Awaitable.WaitForSecondsAsync(typeWriteTime);
+                await AwaitableUtility.WaitForSecondsRealtimeAsync(typeWriteTime);
             }
 
             IsTypeWriting = false;
             SetCompletionLineMarkerEnable(true);
         }
+
+        private async Awaitable WaitUntilNextLineIsAvailableAsync() =>
+            await AwaitableUtility.WaitUntilAsync(() => IsNextLineAvailable);
 
         private void CompleteTypeWrite() => textLine.maxVisibleCharacters = textLine.text.Length;
 
