@@ -15,10 +15,9 @@ namespace OneM.DialogueSystem
 
         public void Load(Actor actor)
         {
-            SetPortrait(actor.Portrait);
             SetName(actor.LocalizedName);
             SetNameActive(true);
-            SetPortraitActive(true);
+            SetPortraitActive(false);
         }
 
         public void SetPortrait(Sprite image) => portrait.sprite = image;

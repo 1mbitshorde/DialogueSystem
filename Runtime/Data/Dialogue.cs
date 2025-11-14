@@ -13,5 +13,7 @@ namespace OneM.DialogueSystem
 
         [field: SerializeField, Tooltip("The lines used on this dialogue.")]
         public DialogueLine[] Lines { get; private set; }
+
+        public Sprite GetPortrait(ActorMood mood) => Actor.Portraits[mood];
     }
 }

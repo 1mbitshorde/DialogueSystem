@@ -34,11 +34,14 @@ namespace OneM.DialogueSystem
 
             gameObject.SetActive(true);
             await AwaitableUtility.WaitForSecondsRealtimeAsync(initialWaitingTime);
+            actor.SetPortraitActive(true);
 
             foreach (var line in dialogue.Lines)
             {
                 IsNextLineAvailable = false;
                 localizedLine.StringReference = line.LocalizedLine;
+
+                actor.SetPortrait(dialogue.GetPortrait(line.Mood));
 
                 await WaitUntilLocalizedLineIsFullyLoadedAsync();
                 await PlayTypeWriteLineAnimationAsync();
