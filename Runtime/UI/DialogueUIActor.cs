@@ -17,17 +17,21 @@ namespace OneM.DialogueSystem
         {
             SetPortrait(actor.Portrait);
             SetName(actor.LocalizedName);
-            SetNameActive(false);
+            SetNameActive(true);
+            SetPortraitActive(true);
         }
 
         public void SetPortrait(Sprite image) => portrait.sprite = image;
+        public void SetPortraitActive(bool isEnabled) => portrait.gameObject.SetActive(isEnabled);
         public void SetName(LocalizedString name) => localizedName.StringReference = name;
         public void SetNameActive(bool isEnabled) => localizedName.gameObject.SetActive(isEnabled);
 
         public void Dispose()
         {
             SetName(null);
+            SetNameActive(false);
             SetPortrait(null);
+            SetPortraitActive(false);
             textName.text = string.Empty;
         }
     }

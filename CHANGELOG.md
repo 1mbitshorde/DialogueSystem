@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+- Remove multiple Actors from Dialogue
+
+### Removed
+- ActorPosition
+- DialogueActor
+
 ## [0.1.0] - 2025-11-12
 ### Added
 - Play sound when dialogue is writing

@@ -9,8 +9,8 @@ namespace OneM.DialogueSystem
     [System.Serializable]
     public struct DialogueLine
     {
-        [field: SerializeField, Tooltip("The position where the line will be in the UI.")]
-        public ActorPosition Position { get; private set; }
+        [field: SerializeField, Tooltip("The Actor mood for this line used in the UI.")]
+        public ActorMood Mood { get; private set; }
         [field: SerializeField, Tooltip("The localized line used for this dialogue.")]
         public LocalizedString LocalizedLine { get; private set; }
     }
