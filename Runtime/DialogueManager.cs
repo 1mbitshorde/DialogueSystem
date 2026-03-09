@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using OneM.GameplaySystem;
 
 namespace OneM.DialogueSystem
 {
@@ -14,7 +13,7 @@ namespace OneM.DialogueSystem
         public static bool IsPlaying { get; private set; }
 
         public static event Action OnDialogueStarted;
-        public static event Action OnDialogueStopped;
+        public static event Action OnDialogueFinished;
 
         private void Awake()
         {
@@ -28,13 +27,9 @@ namespace OneM.DialogueSystem
 
         public static async Awaitable PlayAsync(Dialogue dialogue)
         {
-            GameplayManager.CurrentState = State.Dialogue;
             OnDialogueStarted?.Invoke();
-
             await Instance.board.PlayAsync(dialogue);
-
-            GameplayManager.CurrentState = State.Gameplay;
-            OnDialogueStopped?.Invoke();
+            OnDialogueFinished?.Invoke();
         }
 
         private static void Dispose()
