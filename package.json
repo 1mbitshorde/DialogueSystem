@@ -1,7 +1,7 @@
 {
   "name": "com.1mbitshorde.dialogue-system",
   "displayName": "1M Bits Horde-Dialogue System",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "unity": "6000.1",
   "description": "This package contains a localized Dialogue System for Player and Npcs.",
   "keywords": [
