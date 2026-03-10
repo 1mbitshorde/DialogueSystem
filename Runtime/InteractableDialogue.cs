@@ -9,10 +9,17 @@ namespace OneM.DialogueSystem
     [DisallowMultipleComponent]
     public sealed class InteractableDialogue : MonoBehaviour, IInteractable
     {
-        [field: SerializeField] public Dialogue CurrentDialogue { get; private set; }
+        [field: SerializeField, Tooltip("The local Collider component.")]
+        public Collider Collider { get; private set; }
+        [field: SerializeField, Tooltip("The current dialogue to play.")]
+        public Dialogue CurrentDialogue { get; private set; }
+
+        [Space]
         [SerializeField] private GameObject interactionInput;
 
         public bool IsInteracting { get; private set; }
+
+        private void Reset() => Collider = GetComponent<Collider>();
 
         public bool CanInteract() => DialogueManager.CanPlay() && !IsInteracting;
 
@@ -33,6 +40,9 @@ namespace OneM.DialogueSystem
         {
             if (interactionInput) interactionInput.SetActive(isAvailable);
         }
+
+        public void EnterCollision(Transform interactor) => ChangeAvailability(true);
+        public void ExitCollision(Transform interactor) => ChangeAvailability(false);
 
         public void ShowInteractionFail()
         {
