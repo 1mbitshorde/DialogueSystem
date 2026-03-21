@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
-using ActionCode.AwaitableSystem;
+using OneM.AwaitableSystem;
 
 namespace OneM.DialogueSystem
 {

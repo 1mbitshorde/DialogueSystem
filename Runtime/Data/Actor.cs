@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.Localization;
-using ActionCode.SerializedDictionaries;
+using OneM.SerializedDictionaries;
 
 namespace OneM.DialogueSystem
 {
     /// <summary>
     /// Class to hold Dialogue Actor data.
     /// </summary>
-    [CreateAssetMenu(fileName = "Actor", menuName = "OneM/Dialogue System/New Actor", order = 110)]
+    [CreateAssetMenu(fileName = "Actor", menuName = "OneM/Dialogue System/New Actor")]
     public sealed class Actor : ScriptableObject
     {
         [field: SerializeField, Tooltip("The loacalized name used to show the actor name during dialogues.")]

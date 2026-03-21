@@ -1,20 +1,20 @@
 {
   "name": "com.1mbitshorde.dialogue-system",
   "displayName": "1M Bits Horde-Dialogue System",
-  "version": "0.4.0",
-  "unity": "6000.1",
+  "version": "0.5.0",
+  "unity": "6000.3",
   "description": "This package contains a localized Dialogue System for Player and Npcs.",
   "keywords": [
     "Dialogue",
     "Options"
   ],
   "dependencies": {
-    "com.1mbitshorde.interactable-system": "2.0.0",
-    "com.actioncode.awaitable-system": "1.2.0",
-    "com.actioncode.input-system": "1.7.0",
-    "com.actioncode.serialized-dictionary": "1.2.0",
-    "com.unity.addressables": "2.7.4",
-    "com.unity.localization": "1.5.8",
+    "com.1mbitshorde.interactable-system": "2.1.0",
+    "com.1mbitshorde.awaitable-system": "2.0.1",
+    "com.1mbitshorde.input-system": "2.0.0",
+    "com.1mbitshorde.serialized-dictionary": "2.0.0",
+    "com.unity.addressables": "2.9.0",
+    "com.unity.localization": "1.5.11",
     "com.unity.ugui": "2.0.0"
   },
   "homepage": "https://github.com/1mbitshorde/DialogueSystem#readme",

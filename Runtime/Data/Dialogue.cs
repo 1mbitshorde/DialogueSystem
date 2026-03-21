@@ -5,7 +5,7 @@ namespace OneM.DialogueSystem
     /// <summary>
     /// Class to hold a complete Dialogue with multiple lines.
     /// </summary>
-    [CreateAssetMenu(fileName = "Dialogue", menuName = "OneM/Dialogue System/New Dialogue", order = 110)]
+    [CreateAssetMenu(fileName = "Dialogue", menuName = "OneM/Dialogue System/New Dialogue")]
     public sealed class Dialogue : ScriptableObject
     {
         [field: SerializeField, Tooltip("All Actors present in this dialogue.")]
