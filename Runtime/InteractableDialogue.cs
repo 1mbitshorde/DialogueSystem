@@ -21,6 +21,7 @@ namespace OneM.DialogueSystem
 
         private void Reset() => Collider = GetComponent<Collider>();
 
+        public bool CanCollide() => enabled;
         public bool CanInteract() => DialogueManager.CanPlay() && !IsInteracting;
 
         public async void Interact()
