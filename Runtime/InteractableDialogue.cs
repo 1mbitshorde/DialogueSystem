@@ -24,7 +24,7 @@ namespace OneM.DialogueSystem
         public bool CanCollide() => enabled;
         public bool CanInteract() => DialogueManager.CanPlay() && !IsInteracting;
 
-        public async void Interact()
+        public async void Interact(Transform _)
         {
             if (CurrentDialogue == null) return;
 
@@ -37,18 +37,9 @@ namespace OneM.DialogueSystem
             ChangeAvailability(true);
         }
 
-        public void ChangeAvailability(bool isAvailable)
-        {
-            if (interactionInput) interactionInput.SetActive(isAvailable);
-        }
-
-        public void EnterCollision(Transform interactor) => ChangeAvailability(true);
-        public void ExitCollision(Transform interactor) => ChangeAvailability(false);
-
-        public void ShowInteractionFail()
-        {
-            //TODO play some SEF
-            Debug.LogWarning("Cannot Interact");
-        }
+        public void ChangeAvailability(bool isAvailable) => interactionInput.SetActive(isAvailable);
+        public void EnterCollision(Transform _) => ChangeAvailability(true);
+        public void ExitCollision(Transform _) => ChangeAvailability(false);
+        public void ShowInteractionFail() => Debug.LogWarning("Cannot Interact");
     }
 }
