@@ -6,17 +6,21 @@ using OneM.AwaitableSystem;
 namespace OneM.DialogueSystem
 {
     [DisallowMultipleComponent]
+    [RequireComponent(typeof(CanvasGroup))]
     public sealed class DialogueUIBoard : MonoBehaviour
     {
         [SerializeField] private DialogueUIActor actor;
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private GameObject marker;
+        [SerializeField] private CanvasGroup canvasGroup;
 
         [Header("LINES")]
         [SerializeField] private TMP_Text textLine;
         [SerializeField] private LocalizeStringEvent localizedLine;
 
         [Header("TIMERS")]
+        [SerializeField, Tooltip("The fade In/Out animation duration (in seconds).")]
+        private float fadeDuration = 0.2f;
         [SerializeField, Tooltip("The initial time to wait (in seconds) before start to writing.")]
         private float initialWaitingTime = 1f;
         [SerializeField, Tooltip("The time (in seconds) to wait between each letter.")]
@@ -27,13 +31,19 @@ namespace OneM.DialogueSystem
 
         private int lastAdvanceFrame;
 
+        private void Reset() => canvasGroup = GetComponent<CanvasGroup>();
+
         public async Awaitable PlayAsync(Dialogue dialogue)
         {
             actor.Load(dialogue.Actor);
             SetMarkerEnable(false);
+            SetCanvasGroupAlpha(0f);
 
             gameObject.SetActive(true);
+
             await AwaitableUtility.WaitForSecondsRealtimeAsync(initialWaitingTime);
+            await FadeInAsync();
+
             actor.SetPortraitActive(true);
 
             foreach (var line in dialogue.Lines)
@@ -48,6 +58,7 @@ namespace OneM.DialogueSystem
                 await WaitUntilNextLineIsAvailableAsync();
             }
 
+            await FadeOutAsync();
             Disable();
         }
 
@@ -108,7 +119,13 @@ namespace OneM.DialogueSystem
         private async Awaitable WaitUntilNextLineIsAvailableAsync() =>
             await AwaitableUtility.WaitUntilAsync(() => IsNextLineAvailable);
 
+        private async Awaitable FadeInAsync() => await FadeAsync(startAlpha: 0F, finalAlpha: 1F);
+        private async Awaitable FadeOutAsync() => await FadeAsync(startAlpha: 1F, finalAlpha: 0F);
+        private async Awaitable FadeAsync(float startAlpha, float finalAlpha) =>
+            await AwaitableUtility.LerpAsync(startAlpha, finalAlpha, fadeDuration, SetCanvasGroupAlpha);
+
         private void CompleteTypeWrite() => textLine.maxVisibleCharacters = textLine.text.Length;
         private void SetMarkerEnable(bool isEnable) => marker.SetActive(isEnable);
+        private void SetCanvasGroupAlpha(float alpha) => canvasGroup.alpha = alpha;
     }
 }
