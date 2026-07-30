@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-07-30
 ### Changed
 - Rename InteractableDialogue -> DialogueTrigger
 
@@ -70,7 +71,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - gitignore
 - Initial commit
 
-[Unreleased]: https://github.com/1mbitshorde/DialogueSystem/compare/0.7.0...main
+[Unreleased]: https://github.com/1mbitshorde/DialogueSystem/compare/0.8.0...main
+[0.8.0]: https://github.com/1mbitshorde/DialogueSystem/tree/0.8.0/
 [0.7.0]: https://github.com/1mbitshorde/DialogueSystem/tree/0.7.0/
 [0.6.0]: https://github.com/1mbitshorde/DialogueSystem/tree/0.6.0/
 [0.5.0]: https://github.com/1mbitshorde/DialogueSystem/tree/0.5.0/
