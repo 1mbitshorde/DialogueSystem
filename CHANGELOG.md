@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+- Rename InteractableDialogue -> DialogueTrigger
+
+### Removed
+- Interactable System dependency
+
 ## [0.7.0] - 2026-06-05
 ### Changed
 - Update Interactable System package
