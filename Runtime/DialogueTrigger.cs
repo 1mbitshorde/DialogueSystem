@@ -9,16 +9,21 @@ namespace OneM.DialogueSystem
     public sealed class DialogueTrigger : MonoBehaviour
     {
         [field: SerializeField, Tooltip("The current dialogue to play.")]
-        public Dialogue CurrentDialogue { get; private set; }
+        public Dialogue CurrentDialogue { get; set; }
 
         public bool IsInteracting { get; private set; }
 
         public bool CanStartDialogue() => DialogueManager.CanPlay() && !IsInteracting;
 
+        public bool TryStartDialogue()
+        {
+            var canStartDialogue = CanStartDialogue();
+            if (canStartDialogue) StartDialogue();
+            return canStartDialogue;
+        }
+
         public async void StartDialogue()
         {
-            if (!CanStartDialogue()) return;
-
             IsInteracting = true;
             await DialogueManager.PlayAsync(CurrentDialogue);
             IsInteracting = false;
