@@ -9,7 +9,7 @@ namespace OneM.DialogueSystem
     public sealed class DialogueTrigger : MonoBehaviour
     {
         [field: SerializeField, Tooltip("The current dialogue to play.")]
-        public Dialogue CurrentDialogue { get; set; }
+        public DialogueData CurrentDialogue { get; set; }
 
         public bool IsInteracting { get; private set; }
 

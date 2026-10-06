@@ -33,7 +33,7 @@ namespace OneM.DialogueSystem
 
         private void Reset() => canvasGroup = GetComponent<CanvasGroup>();
 
-        public async Awaitable PlayAsync(Dialogue dialogue)
+        public async Awaitable PlayAsync(DialogueData dialogue)
         {
             actor.Load(dialogue.Actor);
             SetMarkerEnable(false);

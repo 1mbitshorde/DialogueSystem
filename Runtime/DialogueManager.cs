@@ -25,7 +25,7 @@ namespace OneM.DialogueSystem
 
         public static bool CanPlay() => Instance != null && !IsPlaying;
 
-        public static async Awaitable PlayAsync(Dialogue dialogue)
+        public static async Awaitable PlayAsync(DialogueData dialogue)
         {
             OnDialogueStarted?.Invoke();
             await Instance.board.PlayAsync(dialogue);
