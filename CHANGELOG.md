@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - UI System package dependency
+- Dialogue choices
 
 ### Changed
 - Refact class Dialogue -> DialogueData

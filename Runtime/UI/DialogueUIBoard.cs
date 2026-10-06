@@ -1,5 +1,4 @@
 using OneM.AwaitableSystem;
-using OneM.UISystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
@@ -14,7 +13,7 @@ namespace OneM.DialogueSystem
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private GameObject marker;
         [SerializeField] private CanvasGroup canvasGroup;
-        [SerializeField] private ListController choiceList;
+        [SerializeField] private DialogueUIChoices choices;
 
         [Header("LINES")]
         [SerializeField] private TMP_Text textLine;
@@ -35,6 +34,7 @@ namespace OneM.DialogueSystem
         private int lastAdvanceFrame;
 
         private void Reset() => canvasGroup = GetComponent<CanvasGroup>();
+        private void Awake() => choices.Initialize(this);
 
         public async Awaitable PlayAsync(DialogueData dialogue)
         {
@@ -42,8 +42,8 @@ namespace OneM.DialogueSystem
             SetMarkerEnable(false);
             SetCanvasGroupAlpha(0f);
 
+            choices.Hide();
             gameObject.SetActive(true);
-            choiceList.gameObject.SetActive(false);
 
             await AwaitableUtility.WaitForSecondsRealtimeAsync(initialWaitingTime);
             await FadeInAsync();
@@ -52,35 +52,28 @@ namespace OneM.DialogueSystem
 
             foreach (var line in dialogue.Lines)
             {
+                choices.Hide();
+
                 IsNextLineAvailable = false;
+                HasChoices = line.Choices.Length > 0;
                 localizedLine.StringReference = line.LocalizedLine;
 
                 actor.SetPortrait(dialogue.GetPortrait(line.Mood));
 
                 await WaitUntilLocalizedLineIsFullyLoadedAsync();
                 await PlayTypeWriteLineAnimationAsync();
-                ShowChoices(line.Choices);
+
+                if (HasChoices)
+                {
+                    await AwaitableUtility.WaitForSecondsRealtimeAsync(0.2F);
+                    choices.Show(line.Choices);
+                }
+
                 await WaitUntilNextLineIsAvailableAsync();
             }
 
             await FadeOutAsync();
             Disable();
-        }
-
-        private void ShowChoices(UnityEngine.Localization.LocalizedString[] choices)
-        {
-            HasChoices = choices.Length > 0;
-
-            choiceList.Clear();
-            choiceList.gameObject.SetActive(HasChoices);
-
-            foreach (var choice in choices)
-            {
-                var button = choiceList.Add<ActionButton>();
-                button.Label.UpdateLocalization(choice);
-            }
-
-            if (HasChoices) choiceList.Select(0);
         }
 
         /// <summary>
@@ -106,6 +99,13 @@ namespace OneM.DialogueSystem
 
             textLine.text = string.Empty;
             localizedLine.StringReference = null;
+        }
+
+        internal void ConfirmChoice(int id)
+        {
+            DialogueManager.ConfirmChoice(id);
+            HasChoices = false;
+            Advance();
         }
 
         private bool CanAdvance()
@@ -136,7 +136,7 @@ namespace OneM.DialogueSystem
 
             audioSource.Stop();
             IsTypeWriting = false;
-            SetMarkerEnable(true);
+            SetMarkerEnable(!HasChoices);
         }
 
         private async Awaitable WaitUntilNextLineIsAvailableAsync() =>
