@@ -10,15 +10,38 @@ Each dialogue is played between one or multiple Actors. The Actor name and dialo
 
 Create an Actor Scriptable Object (SO) asset by the creation menu, **OneM > Dialogue System > New Actor** and set its fields.
 
-Create a Dialogue SO asset by the creation menu, **OneM > Dialogue System > New Dialogue** and set the its fields, including the Actors for this dialogue.
+Create a Dialogue Data SO asset by the creation menu, **OneM > Dialogue System > New Dialogue Data** and set the its fields, including the Actor for this dialogue.
 
-### Playing the Dialogues
+### Playing the Dialogue
 
-Add the prefab [P_DialogueManager](/Prefabs/P_DialogueManager.prefab) into your Scene and call `DialogueManager.PlayAsync()` function from any other script, passing the Dialogue SO you have created.
+Add the prefab [P_DialogueManager](/Prefabs/P_DialogueManager.prefab) into your Scene and call `DialogueManager.PlayAsync()` function from any other script, passing the Dialogue Data you have created.
 
 You can create your own P_DialogueManager prefab. Check the one provided in this package to know how.
 
-Finally, you can attach the component [InteractableDialogue](/Runtime/InteractableDialogue.cs) into any GameObject and starts a dialogue when the Player (or any other interactor) interacats with it.
+Finally, you can attach the component [DialogueTrigger](/Runtime/DialogueTrigger.cs) into any GameObject and starts a dialogue by calling `StartDialogue()` function.
+
+### Dialogue Choices
+
+Every line into the Dialogue Data has a Choice Dictionary. Use this field to add a Key and a Localized String for every choice.
+
+In your code, you can handle the selected choice by listening to the `OnChoiceConfirmed` event:
+
+```csharp
+using UnityEngine;
+using OneM.DialogueSystem;
+
+namespace YourNamespace
+{
+    public sealed class DialogueChoiceHandler : MonoBehaviour
+    {
+        [SerializeField] private DialogueData dialogue;
+
+        private void OnEnable() => dialogueTrigger.CurrentDialogue.OnChoiceConfirmed += HandleChoiceConfirmed;
+        private void OnDisable() => dialogueTrigger.CurrentDialogue.OnChoiceConfirmed -= HandleChoiceConfirmed;
+        private void HandleChoiceConfirmed(string key) => print($"Selected Choice: {key}")
+    }
+}
+```
 
 ## Installation
 
