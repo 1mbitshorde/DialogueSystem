@@ -1,7 +1,8 @@
+using OneM.AwaitableSystem;
+using OneM.UISystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
-using OneM.AwaitableSystem;
 
 namespace OneM.DialogueSystem
 {
@@ -13,6 +14,7 @@ namespace OneM.DialogueSystem
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private GameObject marker;
         [SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private ListController choiceList;
 
         [Header("LINES")]
         [SerializeField] private TMP_Text textLine;
@@ -26,6 +28,7 @@ namespace OneM.DialogueSystem
         [SerializeField, Tooltip("The time (in seconds) to wait between each letter.")]
         private float typeWriteTime = 0.02f;
 
+        public bool HasChoices { get; private set; }
         public bool IsTypeWriting { get; private set; }
         public bool IsNextLineAvailable { get; private set; }
 
@@ -40,6 +43,7 @@ namespace OneM.DialogueSystem
             SetCanvasGroupAlpha(0f);
 
             gameObject.SetActive(true);
+            choiceList.gameObject.SetActive(false);
 
             await AwaitableUtility.WaitForSecondsRealtimeAsync(initialWaitingTime);
             await FadeInAsync();
@@ -55,11 +59,28 @@ namespace OneM.DialogueSystem
 
                 await WaitUntilLocalizedLineIsFullyLoadedAsync();
                 await PlayTypeWriteLineAnimationAsync();
+                ShowChoices(line.Choices);
                 await WaitUntilNextLineIsAvailableAsync();
             }
 
             await FadeOutAsync();
             Disable();
+        }
+
+        private void ShowChoices(UnityEngine.Localization.LocalizedString[] choices)
+        {
+            HasChoices = choices.Length > 0;
+
+            choiceList.Clear();
+            choiceList.gameObject.SetActive(HasChoices);
+
+            foreach (var choice in choices)
+            {
+                var button = choiceList.Add<ActionButton>();
+                button.Label.UpdateLocalization(choice);
+            }
+
+            if (HasChoices) choiceList.Select(0);
         }
 
         /// <summary>
@@ -89,6 +110,8 @@ namespace OneM.DialogueSystem
 
         private bool CanAdvance()
         {
+            if (HasChoices) return false;
+
             var framesSinceLastAdvance = Time.frameCount - lastAdvanceFrame;
             return framesSinceLastAdvance > 10;
         }
