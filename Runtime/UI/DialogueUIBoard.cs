@@ -30,6 +30,7 @@ namespace OneM.DialogueSystem
         public bool HasChoices { get; private set; }
         public bool IsTypeWriting { get; private set; }
         public bool IsNextLineAvailable { get; private set; }
+        public DialogueData PlayingDialogue { get; private set; }
 
         private int lastAdvanceFrame;
 
@@ -38,6 +39,8 @@ namespace OneM.DialogueSystem
 
         public async Awaitable PlayAsync(DialogueData dialogue)
         {
+            PlayingDialogue = dialogue;
+
             actor.Load(dialogue.Actor);
             SetMarkerEnable(false);
             SetCanvasGroupAlpha(0f);
@@ -55,7 +58,7 @@ namespace OneM.DialogueSystem
                 choices.Hide();
 
                 IsNextLineAvailable = false;
-                HasChoices = line.Choices.Length > 0;
+                HasChoices = line.HasChoices();
                 localizedLine.StringReference = line.LocalizedLine;
 
                 actor.SetPortrait(dialogue.GetPortrait(line.Mood));
@@ -66,7 +69,7 @@ namespace OneM.DialogueSystem
                 if (HasChoices)
                 {
                     await AwaitableUtility.WaitForSecondsRealtimeAsync(0.2F);
-                    choices.Show(line.Choices);
+                    choices.Show(line);
                 }
 
                 await WaitUntilNextLineIsAvailableAsync();
@@ -74,6 +77,7 @@ namespace OneM.DialogueSystem
 
             await FadeOutAsync();
             Disable();
+            PlayingDialogue = null;
         }
 
         /// <summary>
@@ -101,9 +105,9 @@ namespace OneM.DialogueSystem
             localizedLine.StringReference = null;
         }
 
-        internal void ConfirmChoice(int id)
+        internal void ConfirmChoice(string key)
         {
-            DialogueManager.ConfirmChoice(id);
+            PlayingDialogue.ConfirmChoice(key);
             HasChoices = false;
             Advance();
         }

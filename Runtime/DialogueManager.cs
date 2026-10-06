@@ -14,7 +14,6 @@ namespace OneM.DialogueSystem
 
         public static event Action OnDialogueStarted;
         public static event Action OnDialogueFinished;
-        public static event Action<int> OnDialogueChoiceConfirmed;
 
         private void Awake()
         {
@@ -38,7 +37,5 @@ namespace OneM.DialogueSystem
             Instance = null;
             IsPlaying = false;
         }
-
-        internal static void ConfirmChoice(int id) => OnDialogueChoiceConfirmed?.Invoke(id);
     }
 }

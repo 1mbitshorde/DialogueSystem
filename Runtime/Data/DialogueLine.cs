@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -9,13 +10,15 @@ namespace OneM.DialogueSystem
     [System.Serializable]
     public struct DialogueLine
     {
-        [field: SerializeField, Tooltip("The Actor mood for this line used in the UI.")]
-        public ActorMood Mood { get; private set; }
-        [field: SerializeField, Tooltip("The localized line used for this dialogue.")]
-        public LocalizedString LocalizedLine { get; private set; }
+        [Tooltip("The Actor mood for this line used in the UI.")]
+        public ActorMood Mood;
+        [Tooltip("The localized line used for this dialogue.")]
+        public LocalizedString LocalizedLine;
 
-        [field: Space]
-        [field: SerializeField, Tooltip("The localized choices used in this dialogue line ending.")]
-        public LocalizedString[] Choices { get; private set; }
+        [Space]
+        [SerializeField, Tooltip("The choices for this line ending.")]
+        public Dictionary<string, LocalizedString> Choices;
+
+        public readonly bool HasChoices() => Choices.Count > 0;
     }
 }

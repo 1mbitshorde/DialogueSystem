@@ -21,19 +21,19 @@ namespace OneM.DialogueSystem
         public void Hide() => SetActive(false);
         public void SetActive(bool isActive) => gameObject.SetActive(isActive);
 
-        public void Show(UnityEngine.Localization.LocalizedString[] choices)
+        public void Show(DialogueLine line)
         {
             handler.UnbindElements();
 
-            var hasChoices = choices.Length > 0;
+            var hasChoices = line.HasChoices();
             list.Clear();
 
-            foreach (var choice in choices)
+            foreach (var (choiceKey, choiceLocalization) in line.Choices)
             {
                 var button = list.Add<ActionButton>();
 
-                button.Label.UpdateLocalization(choice);
-                button.OnClicked += () => board.ConfirmChoice(choice.GetHashCode());
+                button.Label.UpdateLocalization(choiceLocalization);
+                button.OnClicked += () => board.ConfirmChoice(choiceKey);
             }
 
             handler.BindElements(list.itemContainer);
