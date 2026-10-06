@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
-using OneM.SerializedDictionaries;
 
 namespace OneM.DialogueSystem
 {
@@ -13,6 +13,6 @@ namespace OneM.DialogueSystem
         [field: SerializeField, Tooltip("The loacalized name used to show the actor name during dialogues.")]
         public LocalizedString LocalizedName { get; private set; }
         [field: SerializeField, Tooltip("The portraits used to show the actor mood during dialogues.")]
-        public SerializedDictionary<ActorMood, Sprite> Portraits { get; private set; }
+        public Dictionary<ActorMood, Sprite> Portraits { get; private set; }
     }
 }

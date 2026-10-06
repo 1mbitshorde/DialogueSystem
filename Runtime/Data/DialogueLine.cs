@@ -13,5 +13,9 @@ namespace OneM.DialogueSystem
         public ActorMood Mood { get; private set; }
         [field: SerializeField, Tooltip("The localized line used for this dialogue.")]
         public LocalizedString LocalizedLine { get; private set; }
+
+        [field: Space]
+        [field: SerializeField, Tooltip("The localized choices used in this dialogue line ending.")]
+        public LocalizedString[] Choices { get; private set; }
     }
 }
