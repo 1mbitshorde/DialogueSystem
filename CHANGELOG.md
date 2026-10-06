@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Changed
 - Refact class Dialogue -> DialogueData
+- Increase Unity minimum version to 6000.6
 
 ### Removed
 - Serialized Dictionary package (replaced by Unity Dictionary)
