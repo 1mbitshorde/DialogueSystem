@@ -36,8 +36,8 @@ namespace YourNamespace
     {
         [SerializeField] private DialogueData dialogue;
 
-        private void OnEnable() => dialogueTrigger.CurrentDialogue.OnChoiceConfirmed += HandleChoiceConfirmed;
-        private void OnDisable() => dialogueTrigger.CurrentDialogue.OnChoiceConfirmed -= HandleChoiceConfirmed;
+        private void OnEnable() => dialogue.OnChoiceConfirmed += HandleChoiceConfirmed;
+        private void OnDisable() => dialogue.OnChoiceConfirmed -= HandleChoiceConfirmed;
         private void HandleChoiceConfirmed(string key) => print($"Selected Choice: {key}")
     }
 }
