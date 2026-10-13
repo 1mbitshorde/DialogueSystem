@@ -39,7 +39,9 @@ namespace OneM.DialogueSystem
             }
 
             handler.BindElements(list.itemContainer);
-            if (hasChoices) list.Select(0);
+
+            var availableChoiceIndex = line.GetFirstAvailableChoiceIndex();
+            if (hasChoices && availableChoiceIndex >= 0) list.Select(availableChoiceIndex);
 
             SetActive(hasChoices);
         }
