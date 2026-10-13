@@ -34,6 +34,7 @@ namespace OneM.DialogueSystem
 
                 button.Label.UpdateLocalization(choiceLocalization);
                 button.OnClicked += () => board.ConfirmChoice(choiceKey);
+                button.OnCanceled += () => board.CancelChoice(choiceKey);
             }
 
             handler.BindElements(list.itemContainer);

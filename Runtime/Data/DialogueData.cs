@@ -15,7 +15,7 @@ namespace OneM.DialogueSystem
         public DialogueLine[] Lines;
 
         /// <summary>
-        /// Event triggered when a choice is confirmed by the player.
+        /// Event triggered when a choice is confirmed by the Player.
         /// </summary>
         /// <remarks>
         /// The string parameter represents the key of the choice 
@@ -23,8 +23,18 @@ namespace OneM.DialogueSystem
         /// </remarks>
         public event Action<string> OnChoiceConfirmed;
 
+        /// <summary>
+        /// Event triggered when a choice is canceled by the Player, by pressing the Esc or back button while selecting the choice.
+        /// </summary>
+        /// <remarks>
+        /// The string parameter represents the key of the choice 
+        /// in the <see cref="DialogueLine.Choices"/> dictionary.
+        /// </remarks>
+        public event Action<string> OnChoiceCanceled;
+
         public Sprite GetPortrait(ActorMood mood) => Actor.Portraits[mood];
 
         internal void ConfirmChoice(string key) => OnChoiceConfirmed?.Invoke(key);
+        internal void CancelChoice(string key) => OnChoiceCanceled?.Invoke(key);
     }
 }

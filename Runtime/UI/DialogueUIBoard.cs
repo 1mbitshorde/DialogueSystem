@@ -112,6 +112,13 @@ namespace OneM.DialogueSystem
             Advance();
         }
 
+        internal void CancelChoice(string key)
+        {
+            PlayingDialogue.CancelChoice(key);
+            HasChoices = false;
+            Advance();
+        }
+
         private bool CanAdvance()
         {
             if (HasChoices) return false;

@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- OnChoiceCanceled event
+
 ### Changed
 - Using LocalizationString from UISystem in Dialogue Choices
 
@@ -12,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - UI System package dependency
 - Dialogue choices
+- OnChoiceConfirmed event
 
 ### Changed
 - Refact class Dialogue -> DialogueData
