@@ -28,13 +28,14 @@ namespace OneM.DialogueSystem
             var hasChoices = line.HasChoices();
             list.Clear();
 
-            foreach (var (choiceKey, choiceLocalization) in line.Choices)
+            foreach (var choice in line.Choices)
             {
                 var button = list.Add<ActionButton>();
 
-                button.Label.UpdateLocalization(choiceLocalization);
-                button.OnClicked += () => board.ConfirmChoice(choiceKey);
-                button.OnCanceled += () => board.CancelChoice(choiceKey);
+                button.interactable = choice.IsAvailable;
+                button.Label.UpdateLocalization(choice.GetLocalizedString());
+                button.OnClicked += () => board.ConfirmChoice(choice);
+                button.OnCanceled += () => board.CancelChoice(choice);
             }
 
             handler.BindElements(list.itemContainer);

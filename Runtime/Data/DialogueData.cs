@@ -17,24 +17,16 @@ namespace OneM.DialogueSystem
         /// <summary>
         /// Event triggered when a choice is confirmed by the Player.
         /// </summary>
-        /// <remarks>
-        /// The string parameter represents the key of the choice 
-        /// in the <see cref="DialogueLine.Choices"/> dictionary.
-        /// </remarks>
-        public event Action<string> OnChoiceConfirmed;
+        public event Action<DialogueChoice> OnChoiceConfirmed;
 
         /// <summary>
         /// Event triggered when a choice is canceled by the Player, by pressing the Esc or back button while selecting the choice.
         /// </summary>
         /// <remarks>
-        /// The string parameter represents the key of the choice 
-        /// in the <see cref="DialogueLine.Choices"/> dictionary.
-        /// </remarks>
-        public event Action<string> OnChoiceCanceled;
+        public event Action<DialogueChoice> OnChoiceCanceled;
 
         public Sprite GetPortrait(ActorMood mood) => Actor.Portraits[mood];
-
-        internal void ConfirmChoice(string key) => OnChoiceConfirmed?.Invoke(key);
-        internal void CancelChoice(string key) => OnChoiceCanceled?.Invoke(key);
+        internal void ConfirmChoice(DialogueChoice choice) => OnChoiceConfirmed?.Invoke(choice);
+        internal void CancelChoice(DialogueChoice choice) => OnChoiceCanceled?.Invoke(choice);
     }
 }

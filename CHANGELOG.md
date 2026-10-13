@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - OnChoiceCanceled event
+- DialogueChoice struct
 
 ### Changed
-- Using LocalizationString from UISystem in Dialogue Choices
+- Replace Dialogue Choices from Unity Localized String -> DialogueChoice struct
 
 ## [1.0.0] - 2026-10-06
 ### Added

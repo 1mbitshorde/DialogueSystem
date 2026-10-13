@@ -105,16 +105,16 @@ namespace OneM.DialogueSystem
             localizedLine.StringReference = null;
         }
 
-        internal void ConfirmChoice(string key)
+        internal void ConfirmChoice(DialogueChoice choice)
         {
-            PlayingDialogue.ConfirmChoice(key);
+            PlayingDialogue.ConfirmChoice(choice);
             HasChoices = false;
             Advance();
         }
 
-        internal void CancelChoice(string key)
+        internal void CancelChoice(DialogueChoice choice)
         {
-            PlayingDialogue.CancelChoice(key);
+            PlayingDialogue.CancelChoice(choice);
             HasChoices = false;
             Advance();
         }
