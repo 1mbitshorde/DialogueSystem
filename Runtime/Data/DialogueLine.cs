@@ -17,7 +17,7 @@ namespace OneM.DialogueSystem
 
         [Space]
         [SerializeField, Tooltip("The choices for this line ending.")]
-        public Dictionary<string, LocalizedString> Choices;
+        public Dictionary<string, UISystem.LocalizedString> Choices;
 
         public readonly bool HasChoices() => Choices.Count > 0;
     }
