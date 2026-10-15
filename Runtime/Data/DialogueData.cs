@@ -25,7 +25,12 @@ namespace OneM.DialogueSystem
         /// <remarks>
         public event Action<DialogueChoice> OnChoiceCanceled;
 
-        public Sprite GetPortrait(ActorMood mood) => Actor.Portraits[mood];
+        public Sprite GetPortrait(ActorMood mood)
+        {
+            var hasPortrait = Actor.Portraits.TryGetValue(mood, out var portrait);
+            return hasPortrait ? portrait : null;
+        }
+
         internal void ConfirmChoice(DialogueChoice choice) => OnChoiceConfirmed?.Invoke(choice);
         internal void CancelChoice(DialogueChoice choice) => OnChoiceCanceled?.Invoke(choice);
     }

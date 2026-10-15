@@ -1,8 +1,8 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
+using UnityEngine.UI;
 
 namespace OneM.DialogueSystem
 {
@@ -20,10 +20,15 @@ namespace OneM.DialogueSystem
             SetPortraitActive(false);
         }
 
-        public void SetPortrait(Sprite image) => portrait.sprite = image;
         public void SetPortraitActive(bool isEnabled) => portrait.gameObject.SetActive(isEnabled);
         public void SetName(LocalizedString name) => localizedName.StringReference = name;
         public void SetNameActive(bool isEnabled) => localizedName.gameObject.SetActive(isEnabled);
+
+        public void SetPortrait(Sprite image)
+        {
+            portrait.sprite = image;
+            portrait.enabled = image != null;
+        }
 
         public void Dispose()
         {

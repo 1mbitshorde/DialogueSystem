@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - Animation System package dependency
+- Show/Hide dialogue choices using animation
+
+### Fixed
+- Null ref when Actor Portrait is not set
 
 ## [1.1.0] - 2026-10-13
 ### Added
