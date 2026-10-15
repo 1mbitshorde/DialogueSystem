@@ -1,3 +1,4 @@
+using OneM.AnimationSystem;
 using OneM.UISystem;
 using UnityEngine;
 
@@ -7,6 +8,11 @@ namespace OneM.DialogueSystem
     public sealed class DialogueUIChoices : MonoBehaviour
     {
         [SerializeField] private ListController list;
+        [SerializeField] private CanvasGroup canvasGroup;
+
+        [Header("ANIMATIONS")]
+        [SerializeField] private AbstractAnimation showAnimation;
+        [SerializeField] private AbstractAnimation hideAnimation;
 
         private AudioHandler handler;
         private DialogueUIBoard board;
@@ -17,15 +23,20 @@ namespace OneM.DialogueSystem
             handler = GetComponentInParent<AudioHandler>();
         }
 
-        public void Show() => SetActive(true);
-        public void Hide() => SetActive(false);
         public void SetActive(bool isActive) => gameObject.SetActive(isActive);
 
-        public void Show(DialogueLine line)
+        public void SetVisibility(bool isVisible)
         {
-            handler.UnbindElements();
+            canvasGroup.alpha = isVisible ? 1f : 0f;
+            canvasGroup.interactable = isVisible;
+        }
 
-            var hasChoices = line.HasChoices();
+        public async Awaitable ShowAsync(DialogueLine line)
+        {
+            SetVisibility(false);
+            handler.UnbindElements();
+            //await AwaitableUtility.WaitForSecondsRealtimeAsync(0.2F);
+
             list.Clear();
 
             foreach (var choice in line.Choices)
@@ -38,12 +49,12 @@ namespace OneM.DialogueSystem
                 button.OnCanceled += () => board.CancelChoice(choice);
             }
 
+            await showAnimation.PlayAsync();
+            SetVisibility(true);
+
             handler.BindElements(list.itemContainer);
-
             var availableChoiceIndex = line.GetFirstAvailableChoiceIndex();
-            if (hasChoices && availableChoiceIndex >= 0) list.Select(availableChoiceIndex);
-
-            SetActive(hasChoices);
+            if (availableChoiceIndex >= 0) list.Select(availableChoiceIndex);
         }
     }
 }

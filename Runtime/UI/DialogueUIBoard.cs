@@ -45,8 +45,9 @@ namespace OneM.DialogueSystem
             SetMarkerEnable(false);
             SetCanvasGroupAlpha(0f);
 
-            choices.Hide();
             gameObject.SetActive(true);
+            choices.SetActive(false);
+            choices.SetVisibility(false);
 
             await AwaitableUtility.WaitForSecondsRealtimeAsync(initialWaitingTime);
             await FadeInAsync();
@@ -55,23 +56,18 @@ namespace OneM.DialogueSystem
 
             foreach (var line in dialogue.Lines)
             {
-                choices.Hide();
-
                 IsNextLineAvailable = false;
                 HasChoices = line.HasChoices();
                 localizedLine.StringReference = line.LocalizedLine;
+
+                choices.SetActive(HasChoices);
+                choices.SetVisibility(false);
 
                 actor.SetPortrait(dialogue.GetPortrait(line.Mood));
 
                 await WaitUntilLocalizedLineIsFullyLoadedAsync();
                 await PlayTypeWriteLineAnimationAsync();
-
-                if (HasChoices)
-                {
-                    await AwaitableUtility.WaitForSecondsRealtimeAsync(0.2F);
-                    choices.Show(line);
-                }
-
+                if (HasChoices) await choices.ShowAsync(line);
                 await WaitUntilNextLineIsAvailableAsync();
             }
 
