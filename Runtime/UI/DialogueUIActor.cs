@@ -15,9 +15,11 @@ namespace OneM.DialogueSystem
 
         public void Load(Actor actor)
         {
-            SetName(actor.LocalizedName);
             SetNameActive(true);
             SetPortraitActive(false);
+
+            if (actor.HasLocalizedName()) SetName(actor.LocalizedName);
+            else textName.text = actor.GetName();
         }
 
         public void SetPortraitActive(bool isEnabled) => portrait.gameObject.SetActive(isEnabled);

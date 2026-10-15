@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Animation System package dependency
 - Show/Hide dialogue choices using animation
 
+### Changed
+- Unsealed Actor, allowing to get dynamic name
+
 ### Fixed
 - Null ref when Actor Portrait is not set
 
