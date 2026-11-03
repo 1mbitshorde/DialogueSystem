@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace OneM.DialogueSystem
@@ -13,20 +14,27 @@ namespace OneM.DialogueSystem
 
         public bool IsInteracting { get; private set; }
 
+        public event Action<Transform> OnDialogueStarted;
+        public event Action<Transform> OnDialogueFinished;
+
         public bool CanStartDialogue() => DialogueManager.CanPlay() && !IsInteracting;
 
-        public bool TryStartDialogue()
+        public bool TryStartDialogue(Transform interactor)
         {
             var canStartDialogue = CanStartDialogue();
-            if (canStartDialogue) StartDialogue();
+            if (canStartDialogue) StartDialogue(interactor);
             return canStartDialogue;
         }
 
-        public async void StartDialogue()
+        public async void StartDialogue(Transform interactor)
         {
             IsInteracting = true;
+            OnDialogueStarted?.Invoke(interactor);
+
             await DialogueManager.PlayAsync(CurrentDialogue);
+
             IsInteracting = false;
+            OnDialogueFinished?.Invoke(interactor);
         }
     }
 }
