@@ -19,15 +19,10 @@ namespace OneM.DialogueSystem
 
         public bool CanStartDialogue() => DialogueManager.CanPlay() && !IsInteracting;
 
-        public bool TryStartDialogue(Transform interactor)
-        {
-            var canStartDialogue = CanStartDialogue();
-            if (canStartDialogue) StartDialogue(interactor);
-            return canStartDialogue;
-        }
-
         public async void StartDialogue(Transform interactor)
         {
+            if (!CanStartDialogue()) return;
+
             IsInteracting = true;
             OnDialogueStarted?.Invoke(interactor);
 
