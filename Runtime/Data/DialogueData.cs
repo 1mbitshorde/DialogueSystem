@@ -9,8 +9,6 @@ namespace OneM.DialogueSystem
     [CreateAssetMenu(fileName = "DialogueData", menuName = "OneM/Dialogue System/New Dialogue Data")]
     public sealed class DialogueData : ScriptableObject
     {
-        [Tooltip("All Actors present in this dialogue.")]
-        public ActorData Actor;
         [Tooltip("The lines used on this dialogue.")]
         public DialogueLine[] Lines;
 

@@ -10,7 +10,9 @@ namespace OneM.DialogueSystem
     [System.Serializable]
     public struct DialogueLine
     {
-        [Tooltip("The Actor mood for this line used in the UI.")]
+        [Tooltip("The Actor for this line.")]
+        public ActorData Actor;
+        [Tooltip("The Actor mood for this line.")]
         public ActorMood Mood;
         [Tooltip("The localized line used for this dialogue.")]
         public LocalizedString LocalizedLine;

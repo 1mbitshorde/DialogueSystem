@@ -41,7 +41,6 @@ namespace OneM.DialogueSystem
         {
             PlayingDialogue = dialogue;
 
-            actor.Load(dialogue.Actor);
             SetMarkerEnable(false);
             SetCanvasGroupAlpha(0f);
 
@@ -59,6 +58,7 @@ namespace OneM.DialogueSystem
                 localizedLine.StringReference = line.LocalizedLine;
 
                 audioSource.Play();
+                actor.Load(line.Actor);
                 choices.SetActive(HasChoices);
                 choices.SetVisibility(false);
 
