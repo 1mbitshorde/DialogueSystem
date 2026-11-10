@@ -7,8 +7,8 @@ namespace OneM.DialogueSystem
     /// <summary>
     /// Class to hold Dialogue Actor data.
     /// </summary>
-    [CreateAssetMenu(fileName = "Actor", menuName = "OneM/Dialogue System/New Actor")]
-    public class Actor : ScriptableObject
+    [CreateAssetMenu(fileName = "ActorData", menuName = "OneM/Dialogue System/New Actor Data")]
+    public class ActorData : ScriptableObject
     {
         [field: SerializeField, Tooltip("The loacalized name used to show the actor name during dialogues.")]
         public LocalizedString LocalizedName { get; private set; }

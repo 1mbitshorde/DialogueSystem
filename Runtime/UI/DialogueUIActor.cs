@@ -13,7 +13,7 @@ namespace OneM.DialogueSystem
         [SerializeField] private LocalizeStringEvent localizedName;
         [SerializeField] private Image portrait;
 
-        public void Load(Actor actor)
+        public void Load(ActorData actor)
         {
             SetNameActive(true);
             SetPortraitActive(false);

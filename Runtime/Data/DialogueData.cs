@@ -10,7 +10,7 @@ namespace OneM.DialogueSystem
     public sealed class DialogueData : ScriptableObject
     {
         [Tooltip("All Actors present in this dialogue.")]
-        public Actor Actor;
+        public ActorData Actor;
         [Tooltip("The lines used on this dialogue.")]
         public DialogueLine[] Lines;
 
