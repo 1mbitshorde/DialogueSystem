@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Rename Actor -> ActorData
 
+### Removed
+- Actor portraits
+
 ## [1.3.0] - 2026-11-03
 ### Added
 - OnDialogueStarted/OnDialogueFinished events to DialogueTrigger

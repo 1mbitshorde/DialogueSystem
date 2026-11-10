@@ -52,8 +52,6 @@ namespace OneM.DialogueSystem
             await AwaitableUtility.WaitForSecondsRealtimeAsync(initialWaitingTime);
             await FadeInAsync();
 
-            actor.SetPortraitActive(true);
-
             foreach (var line in dialogue.Lines)
             {
                 IsNextLineAvailable = false;
@@ -62,8 +60,6 @@ namespace OneM.DialogueSystem
 
                 choices.SetActive(HasChoices);
                 choices.SetVisibility(false);
-
-                actor.SetPortrait(dialogue.GetPortrait(line.Mood));
 
                 await WaitUntilLocalizedLineIsFullyLoadedAsync();
                 await PlayTypeWriteLineAnimationAsync();
