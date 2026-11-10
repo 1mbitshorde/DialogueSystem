@@ -58,6 +58,7 @@ namespace OneM.DialogueSystem
                 HasChoices = line.HasChoices();
                 localizedLine.StringReference = line.LocalizedLine;
 
+                audioSource.Play();
                 choices.SetActive(HasChoices);
                 choices.SetVisibility(false);
 
@@ -127,7 +128,6 @@ namespace OneM.DialogueSystem
             var textLength = textLine.text.Length;
             textLine.maxVisibleCharacters = 0;
 
-            audioSource.Play();
             IsTypeWriting = true;
             SetMarkerEnable(false);
 
@@ -137,7 +137,6 @@ namespace OneM.DialogueSystem
                 await AwaitableUtility.WaitForSecondsRealtimeAsync(typeWriteTime);
             }
 
-            audioSource.Stop();
             IsTypeWriting = false;
             SetMarkerEnable(!HasChoices);
         }
