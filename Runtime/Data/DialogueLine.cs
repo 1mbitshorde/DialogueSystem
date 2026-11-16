@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -21,8 +20,6 @@ namespace OneM.DialogueSystem
         [Space]
         [SerializeField, Tooltip("The choices for this line ending.")]
         public List<DialogueChoice> Choices;
-
-        public event Action<string> OnAnimationTriggered;
 
         public readonly bool HasChoices() => Choices.Count > 0;
         public readonly bool HasAnimationName() => !string.IsNullOrEmpty(AnimationName);
@@ -48,11 +45,6 @@ namespace OneM.DialogueSystem
                 }
             }
             return -1;
-        }
-
-        internal readonly void TryTriggerAnimation()
-        {
-            if (HasAnimationName()) OnAnimationTriggered?.Invoke(AnimationName);
         }
     }
 }

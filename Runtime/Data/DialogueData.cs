@@ -20,10 +20,16 @@ namespace OneM.DialogueSystem
         /// <summary>
         /// Event triggered when a choice is canceled by the Player, by pressing the Esc or back button while selecting the choice.
         /// </summary>
-        /// <remarks>
         public event Action<DialogueChoice> OnChoiceCanceled;
+
+        /// <summary>
+        /// Event triggered when a dialogue line has an animation to be played. 
+        /// The animation name is passed as a parameter.
+        /// </summary>
+        public event Action<string> OnAnimationTriggered;
 
         internal void ConfirmChoice(DialogueChoice choice) => OnChoiceConfirmed?.Invoke(choice);
         internal void CancelChoice(DialogueChoice choice) => OnChoiceCanceled?.Invoke(choice);
+        internal void TriggerAnimation(string animationName) => OnAnimationTriggered?.Invoke(animationName);
     }
 }

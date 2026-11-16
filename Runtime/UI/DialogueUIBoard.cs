@@ -56,7 +56,9 @@ namespace OneM.DialogueSystem
                 IsNextLineAvailable = false;
                 HasChoices = line.HasChoices();
                 localizedLine.StringReference = line.LocalizedLine;
-                line.TryTriggerAnimation();
+
+                if (line.HasAnimationName())
+                    dialogue.TriggerAnimation(line.AnimationName);
 
                 audioSource.Play();
                 actor.Load(line.Actor);
