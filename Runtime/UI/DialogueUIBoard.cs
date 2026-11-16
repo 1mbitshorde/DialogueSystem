@@ -56,6 +56,7 @@ namespace OneM.DialogueSystem
                 IsNextLineAvailable = false;
                 HasChoices = line.HasChoices();
                 localizedLine.StringReference = line.LocalizedLine;
+                line.TryTriggerAnimation();
 
                 audioSource.Play();
                 actor.Load(line.Actor);
@@ -64,7 +65,9 @@ namespace OneM.DialogueSystem
 
                 await WaitUntilLocalizedLineIsFullyLoadedAsync();
                 await PlayTypeWriteLineAnimationAsync();
+
                 if (HasChoices) await choices.ShowAsync(line);
+
                 await WaitUntilNextLineIsAvailableAsync();
             }
 
