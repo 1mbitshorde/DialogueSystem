@@ -12,8 +12,8 @@ namespace OneM.DialogueSystem
     {
         [Tooltip("The Actor for this line.")]
         public ActorData Actor;
-        [Tooltip("The Actor mood for this line.")]
-        public ActorMood Mood;
+        [Tooltip("[Optional] The Animation to play when entering in this line. Use LayerName.AnimationName if animation is inside layers.")]
+        public string AnimationName;
         [Tooltip("The localized line used for this dialogue.")]
         public LocalizedString LocalizedLine;
 
@@ -22,6 +22,7 @@ namespace OneM.DialogueSystem
         public List<DialogueChoice> Choices;
 
         public readonly bool HasChoices() => Choices.Count > 0;
+        public readonly bool HasAnimationName() => !string.IsNullOrEmpty(AnimationName);
 
         public void SetChoices(params string[] choices) => SetChoices(new List<string>(choices));
 
