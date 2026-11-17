@@ -1,3 +1,4 @@
+using OneM.AnimationSystem;
 using System;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace OneM.DialogueSystem
 
         public static event Action OnDialogueStarted;
         public static event Action OnDialogueFinished;
+        public static event Action<ActorData, DynamicAnimationData> OnAnimationTriggered;
 
         private void Awake()
         {
@@ -31,6 +33,9 @@ namespace OneM.DialogueSystem
             await Instance.board.PlayAsync(dialogue);
             OnDialogueFinished?.Invoke();
         }
+
+        internal static void TriggerAnimation(ActorData actor, DynamicAnimationData animation) =>
+            OnAnimationTriggered?.Invoke(actor, animation);
 
         private static void Dispose()
         {

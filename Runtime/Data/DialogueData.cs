@@ -22,14 +22,7 @@ namespace OneM.DialogueSystem
         /// </summary>
         public event Action<DialogueChoice> OnChoiceCanceled;
 
-        /// <summary>
-        /// Event triggered when a dialogue line has an animation to be played. 
-        /// The animation name is passed as a parameter.
-        /// </summary>
-        public event Action<string> OnAnimationTriggered;
-
         internal void ConfirmChoice(DialogueChoice choice) => OnChoiceConfirmed?.Invoke(choice);
         internal void CancelChoice(DialogueChoice choice) => OnChoiceCanceled?.Invoke(choice);
-        internal void TriggerAnimation(string animationName) => OnAnimationTriggered?.Invoke(animationName);
     }
 }
